@@ -22,7 +22,9 @@
         "commandName": "Project",
         "dotnetRunMessages": true,
         "launchBrowser": true,
-        "applicationUrl": "https://localhost:7056;http://localhost:5059",
+        //Changed first url in applicationUrl to 5001 to match tutorial, because this is .NET 8
+        // Restart the project and check the url in the browser
+        "applicationUrl": "https://localhost:5001;http://localhost:5059",
         "environmentVariables": {
           "ASPNETCORE_ENVIRONMENT": "Development"
         }

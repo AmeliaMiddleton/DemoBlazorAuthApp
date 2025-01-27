@@ -1,6 +1,15 @@
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 using DemoBlazorAuth.Components;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Different place from tutorial, changed for .NET 8
+builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
+
+builder.Services.AddControllersWithViews().AddMicrosoftIdentityUI();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -23,5 +32,21 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+// I haven't added .AddMicrosoftIdentityUI() to
+// .AddServerSideBlazor because it is not in Program.cs and
+// there is no Startup.CS in .NET 8
+
+// This is being added to Program.cs instead of Startup.cs, because this is .NET 8
+app.UseAuthentication();
+app.UseAuthorization();
+
+// This is being added to Program.cs instead of Startup.cs, because this is .NET 8
+// also there are not other endpoints in this project
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllers();
+//});
+app.MapControllers();
 
 app.Run();

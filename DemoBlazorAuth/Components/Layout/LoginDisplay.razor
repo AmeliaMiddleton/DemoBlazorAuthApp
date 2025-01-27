@@ -1,0 +1,12 @@
+﻿@* This is in Layout and not Shared, because this is .NET 8 *@
+﻿<AuthorizeView>
+    <Authorized>
+        <a href="MicrosoftIdentity/Account/EditProfile">
+            Hello, @context.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname")?.Value
+        </a>
+         <a href="MicrosoftIdentity/Account/SignOut">Log out</a>
+    </Authorized>
+    <NotAuthorized>
+        <a href="MicrosoftIdentity/Account/SignIn">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>

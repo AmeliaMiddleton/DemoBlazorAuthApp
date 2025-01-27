@@ -8,3 +8,7 @@
 @using Microsoft.JSInterop
 @using DemoBlazorAuth
 @using DemoBlazorAuth.Components
+@* Added these to get @context to work in LoginDisplay.razor, 
+I don't remember it being mentioned in tutorial, using .NET 8 *@
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
