@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using DemoBlazorAuth.Components;
+using Microsoft.AspNetCore.Rewrite;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,12 +43,25 @@ app.MapRazorComponents<App>()
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseRewriter(
+    new RewriteOptions()
+    .Add(
+        context =>
+        {
+            if (context.HttpContext.Request.Path == "/MicrosoftIdentity/Account/SignedOut")
+            {
+                context.HttpContext.Response.Redirect("/");
+            }
+        }
+));
 // This is being added to Program.cs instead of Startup.cs, because this is .NET 8
 // also there are not other endpoints in this project
 //app.UseEndpoints(endpoints =>
 //{
 //    endpoints.MapControllers();
 //});
+
+
 app.MapControllers();
 
 app.Run();
